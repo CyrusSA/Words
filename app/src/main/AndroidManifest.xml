@@ -20,7 +20,10 @@
         </activity>
         <activity
             android:name=".DisplayLyricsActivity"
-            android:label="@string/title_activity_display_lyrics"></activity>
+            android:label="@string/title_activity_display_lyrics" />
+        <activity
+            android:name=".DisplayHistoryActivity"
+            android:label="@string/title_activity_display_history"></activity>
     </application>
 
 </manifest>
