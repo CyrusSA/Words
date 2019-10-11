@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONObject;
 import org.json.JSONException;
 
+import cyrussa.github.com.words.Models.Song;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         display = findViewById(R.id.display);
         db = new Database(this);
 
-        requestQueue = Volley.newRequestQueue(this);  // This setups up a new request queue which we will need to make HTTP requests.
+        requestQueue = Volley.newRequestQueue(this);  // This sets up a new request queue which we will need to make HTTP requests.
     }
 
     private void sendLyrics(String lyricsString){
