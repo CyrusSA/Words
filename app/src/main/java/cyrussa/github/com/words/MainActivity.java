@@ -20,7 +20,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-import cyrussa.github.com.words.Models.Song;
+import cyrussa.github.com.words.Services.VolleyHelper;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Button getLyrics;
     TextView display;
     RequestQueue requestQueue;
+    VolleyHelper volleyHelper;
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
     @Override
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         getLyrics = findViewById(R.id.getLyrics);
         display = findViewById(R.id.display);
         db = new Database(this);
-
+        volleyHelper = new VolleyHelper(this);
         requestQueue = Volley.newRequestQueue(this);  // This sets up a new request queue which we will need to make HTTP requests.
     }
 
@@ -53,31 +54,40 @@ public class MainActivity extends AppCompatActivity {
     public void getLyrics(View view) {
         String request = "https://api.lyrics.ovh/v1/" + artist.getText().toString() + "/" + songTitle.getText().toString() + "/";
         db.insert(songTitle.getText().toString(), artist.getText().toString());
-        JsonObjectRequest objReq = new JsonObjectRequest(Request.Method.GET, request,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            sendLyrics(response.getString("lyrics"));
-                        } catch (JSONException e) {
-                            // If there is an error then output this to the logs.
-                            Log.e("Volley", "Invalid JSON Object.");
-                        }
-                    }
-                },
+//        JsonObjectRequest objReq = new JsonObjectRequest(Request.Method.GET, request,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        try {
+//                            sendLyrics(response.getString("lyrics"));
+//                        } catch (JSONException e) {
+//                            // If there is an error then output this to the logs.
+//                            Log.e("Volley", "Invalid JSON Object.");
+//                        }
+//                    }
+//                },
+//
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Log.e("Volley", error.toString());
+//                    }
+//                }
+//
+//        );
+        volleyHelper.newRequest(Request.Method.GET, request,
+                (response) -> {
+                    try {
+                        sendLyrics(response.getString("lyrics"));
+                    } catch (JSONException e) {
 
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Volley", error.toString());
                     }
                 }
-
         );
-
-        // Add the request we just defined to our request queue.
-        // The request queue will automatically handle the request as soon as it can.
-        requestQueue.add(objReq);
+//
+//        // Add the request we just defined to our request queue.
+//        // The request queue will automatically handle the request as soon as it can.
+//        requestQueue.add(objReq);
     }
 
     public void displayHistory(View view){
