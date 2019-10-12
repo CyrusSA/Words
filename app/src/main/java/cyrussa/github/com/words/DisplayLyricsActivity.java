@@ -14,7 +14,7 @@ public class DisplayLyricsActivity extends Activity {
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        String lyrics = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        String lyrics = intent.getStringExtra("lyrics");
 
         // Capture the layout's TextView and set the string as its text
         TextView display = findViewById(R.id.display);

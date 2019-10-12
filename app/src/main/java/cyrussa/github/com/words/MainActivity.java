@@ -20,17 +20,16 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONObject;
 import org.json.JSONException;
 
+import cyrussa.github.com.words.Models.Song;
+import cyrussa.github.com.words.Services.LyricsService;
 import cyrussa.github.com.words.Services.VolleyHelper;
 
 
 public class MainActivity extends AppCompatActivity {
-    Database db;
     EditText songTitle, artist;
     Button getLyrics;
     TextView display;
-    RequestQueue requestQueue;
-    VolleyHelper volleyHelper;
-    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+    LyricsService lyricsService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,72 +39,31 @@ public class MainActivity extends AppCompatActivity {
         artist = findViewById(R.id.artist);
         getLyrics = findViewById(R.id.getLyrics);
         display = findViewById(R.id.display);
-        db = new Database(this);
-        volleyHelper = new VolleyHelper(this);
-        requestQueue = Volley.newRequestQueue(this);  // This sets up a new request queue which we will need to make HTTP requests.
-    }
-
-    private void sendLyrics(String lyricsString){
-        Intent intent =new Intent(this, DisplayLyricsActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, lyricsString);
-        startActivity(intent);
+        VolleyHelper.init(this);
+        lyricsService = new LyricsService();
     }
 
     public void getLyrics(View view) {
-        String request = "https://api.lyrics.ovh/v1/" + artist.getText().toString() + "/" + songTitle.getText().toString() + "/";
-        db.insert(songTitle.getText().toString(), artist.getText().toString());
-//        JsonObjectRequest objReq = new JsonObjectRequest(Request.Method.GET, request,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try {
-//                            sendLyrics(response.getString("lyrics"));
-//                        } catch (JSONException e) {
-//                            // If there is an error then output this to the logs.
-//                            Log.e("Volley", "Invalid JSON Object.");
-//                        }
-//                    }
-//                },
-//
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Log.e("Volley", error.toString());
-//                    }
-//                }
-//
-//        );
-        volleyHelper.newRequest(Request.Method.GET, request,
-                (response) -> {
-                    try {
-                        sendLyrics(response.getString("lyrics"));
-                    } catch (JSONException e) {
-
-                    }
-                }
-        );
-//
-//        // Add the request we just defined to our request queue.
-//        // The request queue will automatically handle the request as soon as it can.
-//        requestQueue.add(objReq);
+        Song song = new Song(songTitle.getText().toString(), artist.getText().toString());
+        lyricsService.getLyrics(song, this);
     }
 
     public void displayHistory(View view){
-        StringBuilder sb = new StringBuilder();
-        Cursor data = db.readAll();
-        if(data.getCount() == 0){
-            sb.append("No Data Found");
-        } else {
-            for(data.moveToLast(); !data.isBeforeFirst(); data.moveToPrevious()){
-                sb.append(data.getString(0) + " by " + data.getString(1) + "\n");
-            }
-        }
-        Intent intent =new Intent(this, DisplayHistoryActivity.class);
-        intent.putExtra("history", sb.toString());
-        startActivity(intent);
+//        StringBuilder sb = new StringBuilder();
+//        if(data.getCount() == 0){
+//            sb.append("No Data Found");
+//        } else {
+//            for(data.moveToLast(); !data.isBeforeFirst(); data.moveToPrevious()){
+//                sb.append(data.getString(0) + " by " + data.getString(1) + "\n");
+//            }
+//        }
+//        Intent intent =new Intent(this, DisplayHistoryActivity.class);
+//        intent.putExtra("history", sb.toString());
+//        startActivity(intent);
     }
 
     public void clearHistory(View view){
-        db.clearTable();
+        Intent intent = new Intent(this, SearchDisplayActivity.class);
+        startActivity(intent);
     }
 }
