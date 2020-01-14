@@ -2,6 +2,7 @@ package cyrussa.github.com.words;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,18 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.Response;
-import com.android.volley.Request;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONObject;
-import org.json.JSONException;
+import java.io.IOException;
 
 import cyrussa.github.com.words.Models.Song;
 import cyrussa.github.com.words.Services.LyricsService;
+import cyrussa.github.com.words.Services.SongSearchService;
 import cyrussa.github.com.words.Services.VolleyHelper;
 
 
@@ -30,17 +24,24 @@ public class MainActivity extends AppCompatActivity {
     Button getLyrics;
     TextView display;
     LyricsService lyricsService;
+    SongSearchService songSearchService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // To enable network calls in UI thread, should be removed
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         songTitle = findViewById(R.id.songTitle);
         artist = findViewById(R.id.artist);
         getLyrics = findViewById(R.id.getLyrics);
         display = findViewById(R.id.display);
         VolleyHelper.init(this);
         lyricsService = new LyricsService();
+        songSearchService = new SongSearchService(this);
     }
 
     public void getLyrics(View view) {
@@ -48,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
         lyricsService.getLyrics(song, this);
     }
 
-    public void displayHistory(View view){
+    public void displayHistory(View view) throws IOException {
+        songSearchService.authenticate();
 //        StringBuilder sb = new StringBuilder();
 //        if(data.getCount() == 0){
 //            sb.append("No Data Found");
