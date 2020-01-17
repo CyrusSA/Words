@@ -50,18 +50,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displayHistory(View view) throws IOException {
+        // Here for testing purposes
         songSearchService.authenticate();
-//        StringBuilder sb = new StringBuilder();
-//        if(data.getCount() == 0){
-//            sb.append("No Data Found");
-//        } else {
-//            for(data.moveToLast(); !data.isBeforeFirst(); data.moveToPrevious()){
-//                sb.append(data.getString(0) + " by " + data.getString(1) + "\n");
-//            }
-//        }
-//        Intent intent =new Intent(this, DisplayHistoryActivity.class);
-//        intent.putExtra("history", sb.toString());
-//        startActivity(intent);
     }
 
     public void clearHistory(View view){

@@ -77,7 +77,7 @@ public class SongSearchService {
     }
 
     private Song toSong(JSONObject jsonObject) throws JSONException{
-        //Dis WRONg
+        // Incomplete
         Song song = new Song(jsonObject.getString("name"), jsonObject.getString("artists"));
         return null;
     }
@@ -117,6 +117,7 @@ public class SongSearchService {
         return headers;
     }
 
+    // Not currently working, need to get the structure of the request right
     public void authenticate() throws IOException {
         HttpURLConnection conn = (HttpURLConnection) new URL(AUTHENTICATION_ENDPOINT).openConnection();
 
@@ -149,7 +150,8 @@ public class SongSearchService {
         }
     }
 
-    public void authenticate2(){
+    // Alternate impl to authentiate
+    public void authenticate_VOLLEY(){
         JSONObject requestBody = new JSONObject();
 
         try {
