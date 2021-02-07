@@ -1,6 +1,7 @@
 package cyrussa.github.com.words.Services;
 
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -22,9 +23,9 @@ public class LyricsService {
         volleyHelper = VolleyHelper.getInstance();
     }
 
-    public void getLyrics(Song song, MainActivity mainActivity){
+    public void getLyrics(Song song, AppCompatActivity mainActivity){
         String url = "https://api.lyrics.ovh/v1/" + song.getArtist() + "/" + song.getTitle() + "/";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
                     Intent intent =new Intent(mainActivity, DisplayLyricsActivity.class);
                     try {

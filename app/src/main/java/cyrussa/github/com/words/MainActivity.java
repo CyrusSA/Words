@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.io.IOException;
 
 import cyrussa.github.com.words.Models.Song;
+import cyrussa.github.com.words.Services.Api.Spotify;
 import cyrussa.github.com.words.Services.LyricsService;
 import cyrussa.github.com.words.Services.SongSearchService;
 import cyrussa.github.com.words.Services.VolleyHelper;
@@ -37,11 +38,15 @@ public class MainActivity extends AppCompatActivity {
 
         songTitle = findViewById(R.id.songTitle);
         artist = findViewById(R.id.artist);
-        getLyrics = findViewById(R.id.getLyrics);
+        getLyrics = findViewById(R.id.search_button);
         display = findViewById(R.id.display);
         VolleyHelper.init(this);
         lyricsService = new LyricsService();
         songSearchService = new SongSearchService(this);
+    }
+
+    public void search(View view) {
+        songSearchService.search(this, songTitle.getText().toString());
     }
 
     public void getLyrics(View view) {
@@ -51,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void displayHistory(View view) throws IOException {
         // Here for testing purposes
-        songSearchService.authenticate();
+        Spotify spotify = new Spotify(this);
+        spotify.authenticate();
     }
 
     public void clearHistory(View view){

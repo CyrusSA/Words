@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/songTitle" />
 
     <Button
-        android:id="@+id/getLyrics"
+        android:id="@+id/search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -49,8 +49,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="getLyrics"
-        android:text="Get Lyrics"
+        android:onClick="search"
+        android:text="Search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/getLyrics" />
+        app:layout_constraintTop_toBottomOf="@+id/search_button" />
 
     <Button
         android:layout_width="wrap_content"

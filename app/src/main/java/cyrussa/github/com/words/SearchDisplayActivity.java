@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import cyrussa.github.com.words.Models.Song;
 import lombok.AllArgsConstructor;
 
@@ -36,10 +38,10 @@ public class SearchDisplayActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        Song[] myDataset = { new Song("Hello", "Adele"), new Song("Bye", "Ya Boi"), new Song("Bydwade", "Ya Bodwi"), new Song("Bye", "Ya Boi")};
+        ArrayList<Song> searchResults = (ArrayList<Song>)getIntent().getSerializableExtra("searchResults");
 
         // specify an adapter (see also next example)
-        searchItemAdapter = new SearchItemAdapter(myDataset);
+        searchItemAdapter = new SearchItemAdapter(searchResults);
         recyclerView.setAdapter(searchItemAdapter);
 
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
@@ -48,7 +50,7 @@ public class SearchDisplayActivity extends AppCompatActivity {
 
     @AllArgsConstructor
     public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.ViewHolder>{
-        private Song[] songData;
+        private ArrayList<Song> songData;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
@@ -73,15 +75,15 @@ public class SearchDisplayActivity extends AppCompatActivity {
         // Replace the contents of a view (invoked by the layout manager)
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, int position) {
-            viewHolder.artist.setText(songData[position].getArtist());
-            viewHolder.title.setText(songData[position].getTitle());
+            viewHolder.artist.setText(songData.get(position).getArtist());
+            viewHolder.title.setText(songData.get(position).getTitle());
 
         }
 
         // Return the size of your dataset (invoked by the layout manager)
         @Override
         public int getItemCount() {
-            return songData.length;
+            return songData.size();
         }
 
     }
