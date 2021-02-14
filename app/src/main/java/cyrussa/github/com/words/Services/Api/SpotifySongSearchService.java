@@ -1,6 +1,7 @@
 package cyrussa.github.com.words.Services.Api;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.util.JsonReader;
 import android.util.Log;
 
@@ -24,10 +25,11 @@ import java.util.Map;
 import cyrussa.github.com.words.BuildConfig;
 import cyrussa.github.com.words.Models.AccessToken;
 import cyrussa.github.com.words.Models.Song;
+import cyrussa.github.com.words.Services.SongSearchService;
 import cyrussa.github.com.words.Services.VolleyHelper;
 import lombok.Getter;
 
-public class Spotify {
+public class SpotifySongSearchService implements SongSearchService {
     private static final String AUTHENTICATION_ENDPOINT = "https://accounts.spotify.com/api/token/?grant_type=client_credentials";
     private static final String SEARCH_ENDPOINT = "https://api.spotify.com/v1/search/q=%s&type=track";
 
@@ -38,12 +40,12 @@ public class Spotify {
 
     private Context context;
 
-    public Spotify(Context context){
+    public SpotifySongSearchService(Context context){
         volleyHelper = VolleyHelper.getInstance();
         this.context = context;
     }
 
-    public void search(String query){
+    public void search(AppCompatActivity activity, String query){
         String url = String.format(SEARCH_ENDPOINT, query.trim().replace(" ", "%20"));
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
