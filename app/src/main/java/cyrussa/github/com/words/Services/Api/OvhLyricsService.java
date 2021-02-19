@@ -1,7 +1,7 @@
 package cyrussa.github.com.words.Services.Api;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
 import com.android.volley.Request;

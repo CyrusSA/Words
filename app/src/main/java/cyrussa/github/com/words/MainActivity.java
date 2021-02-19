@@ -2,7 +2,7 @@ package cyrussa.github.com.words;
 
 import android.content.Intent;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,9 +11,7 @@ import android.widget.TextView;
 
 import cyrussa.github.com.words.Models.Song;
 import cyrussa.github.com.words.Services.Api.OvhLyricsService;
-import cyrussa.github.com.words.Services.Api.SpotifySongSearchService;
 import cyrussa.github.com.words.Services.LyricsService;
-import cyrussa.github.com.words.Services.SongSearchService;
 import cyrussa.github.com.words.Services.VolleyHelper;
 
 
@@ -22,16 +20,11 @@ public class MainActivity extends AppCompatActivity {
     Button getLyrics;
     TextView display;
     LyricsService lyricsService;
-    SongSearchService songSearchService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // To enable network calls in UI thread, should be removed
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
 
         songTitle = findViewById(R.id.songTitle);
         artist = findViewById(R.id.artist);
@@ -39,11 +32,13 @@ public class MainActivity extends AppCompatActivity {
         display = findViewById(R.id.display);
         VolleyHelper.init(this);
         lyricsService = new OvhLyricsService();
-        songSearchService = new SpotifySongSearchService(this);
     }
 
     public void search(View view) {
-        songSearchService.search(this, songTitle.getText().toString());
+        Intent searchActivityIntent = new Intent(this, SearchActivity.class);
+        searchActivityIntent.putExtra("query", songTitle.getText().toString());
+
+        this.startActivity(searchActivityIntent);
     }
 
     public void getLyrics(View view) {
@@ -52,13 +47,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displayHistory(View view) {
-        // Here for testing purposes
-        SpotifySongSearchService spotifySongSearchService = new SpotifySongSearchService(this);
-        spotifySongSearchService.authenticate();
     }
 
     public void clearHistory(View view){
-        Intent intent = new Intent(this, SearchDisplayActivity.class);
+        Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
 }

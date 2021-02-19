@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.Value;
 
-@Getter
 public class AccessToken {
     private final String token;
     private final String type;
@@ -26,6 +25,10 @@ public class AccessToken {
         this.type = type;
         this.lifeInSeconds = lifeInSeconds;
         this.createdOn = currentLocalDateTimeSupplier.get();
+    }
+
+    public String getToken() {
+        return this.type.substring(0, 1).toUpperCase() + this.type.substring(1) + " " + this.token;
     }
 
     // For testing
