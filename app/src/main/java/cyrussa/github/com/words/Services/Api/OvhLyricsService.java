@@ -22,7 +22,7 @@ public class OvhLyricsService implements LyricsService {
     }
 
     public void getLyrics(AppCompatActivity mainActivity, Song song){
-        String url = "https://api.lyrics.ovh/v1/" + song.getArtist() + "/" + song.getTitle() + "/";
+        String url = "https://api.lyrics.ovh/v1/" + song.getArtists() + "/" + song.getTitle() + "/";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
                     Intent intent =new Intent(mainActivity, DisplayLyricsActivity.class);

@@ -1,13 +1,8 @@
 package cyrussa.github.com.words.Services.Api;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
 import com.android.volley.Request;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
@@ -23,7 +18,6 @@ import java.util.function.Consumer;
 import cyrussa.github.com.words.BuildConfig;
 import cyrussa.github.com.words.Models.AccessToken;
 import cyrussa.github.com.words.Models.Song;
-import cyrussa.github.com.words.SearchActivity;
 import cyrussa.github.com.words.Services.VolleyHelper;
 import lombok.Getter;
 
@@ -130,7 +124,7 @@ public class SearchRepository {
             artistNames.add(artists.getJSONObject(i).getString("name"));
         }
 
-        Song song = new Song(jsonObject.getString("name"), String.join(", ", artistNames));
+        Song song = new Song(jsonObject.getString("name"), artistNames);
         return song;
     }
 }

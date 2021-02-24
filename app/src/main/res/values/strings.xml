@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">Words</string>
     <string name="song_title">Song Title</string>
-    <string name="artist">Artist</string>
-    <string name="get_lyrics">Get Lyrics</string>
+    <string name="search_button">Search</string>
     <string name="title_activity_display_lyrics">DisplayLyricsActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -95,5 +94,4 @@
     </string>
     <string name="title_activity_display_history">DisplayHistoryActivity</string>
     <string name="title_activity_search_display">SearchDisplayActivity</string>
-    <string name="action_settings">Settings</string>
 </resources>

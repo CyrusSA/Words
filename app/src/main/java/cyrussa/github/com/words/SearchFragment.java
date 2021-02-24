@@ -1,72 +1,76 @@
 package cyrussa.github.com.words;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import cyrussa.github.com.words.Models.Song;
+import cyrussa.github.com.words.Services.VolleyHelper;
 import cyrussa.github.com.words.ViewModels.SearchActivityViewModel;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchFragment extends Fragment {
 
-    RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
-    SearchItemAdapter searchItemAdapter;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private SearchItemAdapter searchItemAdapter;
+    private SearchActivityViewModel viewModel;
+
+    private EditText songTitle;
+    private Button getLyrics;
+
+    public SearchFragment() {
+        super(R.layout.fragment_search);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_display);
+        songTitle = getView().findViewById(R.id.songTitle);
+        getLyrics = getView().findViewById(R.id.search_button);
 
-        final SearchActivityViewModel viewModel = new ViewModelProvider(this).get(SearchActivityViewModel.class);
+        VolleyHelper.init(requireContext());
+        viewModel = new ViewModelProvider(this).get(SearchActivityViewModel.class);
         viewModel.initialize();
 
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = getView().findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
 
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(requireContext());
         recyclerView.setLayoutManager(layoutManager);
 
         searchItemAdapter = new SearchItemAdapter();
         recyclerView.setAdapter(searchItemAdapter);
 
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
 
         viewModel.searchResults().observe(this, list -> searchItemAdapter.submitList(list));
 
-        Intent intent = getIntent();
-        String query = intent.getStringExtra("query");
-        if (!(query == null || query.isEmpty())) {
-            viewModel.search(query);
-        }
+        getLyrics.setOnClickListener(v -> viewModel.search(songTitle.getText().toString()));
     }
 }
 
 class SearchItemAdapter extends ListAdapter<Song, SearchItemAdapter.ViewHolder> {
 
-    public SearchItemAdapter() {
+    SearchItemAdapter() {
         super(DIFF_CALLBACK);
     }
 
-    public static final DiffUtil.ItemCallback<Song> DIFF_CALLBACK = new DiffUtil.ItemCallback<Song>() {
+    static final DiffUtil.ItemCallback<Song> DIFF_CALLBACK = new DiffUtil.ItemCallback<Song>() {
 
         @Override
         public boolean areItemsTheSame(@NonNull Song oldItem, @NonNull Song newItem) {
@@ -79,19 +83,19 @@ class SearchItemAdapter extends ListAdapter<Song, SearchItemAdapter.ViewHolder> 
         }
     };
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView title;
-        public TextView artist;
+        TextView title;
+        TextView artist;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title12);
             artist = itemView.findViewById(R.id.artist12);
         }
 
-        public void bindTo(Song song) {
-            this.artist.setText(song.getArtist());
+        void bindTo(Song song) {
+            this.artist.setText(String.join(", ", song.getArtists()));
             this.title.setText(song.getTitle());
         }
     }
