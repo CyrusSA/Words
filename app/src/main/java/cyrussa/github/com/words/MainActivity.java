@@ -5,13 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import cyrussa.github.com.words.Services.Api.OvhLyricsService;
-import cyrussa.github.com.words.Services.LyricsService;
-
 public class MainActivity extends AppCompatActivity {
 
     TextView display;
-    LyricsService lyricsService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,9 +15,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         display = findViewById(R.id.display);
-        lyricsService = new OvhLyricsService();
     }
-    
+
     public void displayHistory(View view) {
     }
 }

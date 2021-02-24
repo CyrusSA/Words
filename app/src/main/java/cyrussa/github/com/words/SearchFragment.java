@@ -21,17 +21,17 @@ import android.widget.TextView;
 
 import cyrussa.github.com.words.Models.Song;
 import cyrussa.github.com.words.Services.VolleyHelper;
-import cyrussa.github.com.words.ViewModels.SearchActivityViewModel;
+import cyrussa.github.com.words.ViewModels.SearchFragmentViewModel;
 
 public class SearchFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private SearchItemAdapter searchItemAdapter;
-    private SearchActivityViewModel viewModel;
+    private SearchFragmentViewModel viewModel;
 
     private EditText songTitle;
-    private Button getLyrics;
+    private Button searchButton;
 
     public SearchFragment() {
         super(R.layout.fragment_search);
@@ -41,10 +41,10 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         songTitle = getView().findViewById(R.id.songTitle);
-        getLyrics = getView().findViewById(R.id.search_button);
+        searchButton = getView().findViewById(R.id.search_button);
 
         VolleyHelper.init(requireContext());
-        viewModel = new ViewModelProvider(this).get(SearchActivityViewModel.class);
+        viewModel = new ViewModelProvider(this).get(SearchFragmentViewModel.class);
         viewModel.initialize();
 
         recyclerView = getView().findViewById(R.id.recyclerView);
@@ -58,9 +58,9 @@ public class SearchFragment extends Fragment {
 
         recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
 
-        viewModel.searchResults().observe(this, list -> searchItemAdapter.submitList(list));
+        viewModel.searchResults().observe(this, searchItemAdapter::submitList);
 
-        getLyrics.setOnClickListener(v -> viewModel.search(songTitle.getText().toString()));
+        searchButton.setOnClickListener(v -> viewModel.search(songTitle.getText().toString()));
     }
 }
 

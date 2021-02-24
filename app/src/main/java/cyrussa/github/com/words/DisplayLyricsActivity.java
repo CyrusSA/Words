@@ -5,19 +5,28 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.widget.TextView;
 
-public class DisplayLyricsActivity extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import cyrussa.github.com.words.Models.Song;
+import cyrussa.github.com.words.ViewModels.LyricsActivityViewModel;
+
+public class DisplayLyricsActivity extends AppCompatActivity {
+
+    private LyricsActivityViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_lyrics);
 
-        // Get the Intent that started this activity and extract the string
-        Intent intent = getIntent();
-        String lyrics = intent.getStringExtra("lyrics");
+        viewModel = new ViewModelProvider(this).get(LyricsActivityViewModel.class);
+        viewModel.initialize();
 
-        // Capture the layout's TextView and set the string as its text
+        Song song = (Song) getIntent().getSerializableExtra("song");
         TextView display = findViewById(R.id.display);
-        display.setText(lyrics);
+
+        viewModel.lyrics().observe(this, display::setText);
+        viewModel.fetchLyrics(song);
     }
 }

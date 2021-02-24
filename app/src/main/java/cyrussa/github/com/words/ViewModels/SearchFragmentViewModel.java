@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel;
 import cyrussa.github.com.words.Models.Song;
 import cyrussa.github.com.words.Services.Api.SearchRepository;
 
-public class SearchActivityViewModel extends ViewModel {
+public class SearchFragmentViewModel extends ViewModel {
 
     private final MutableLiveData<ArrayList<Song>> searchResults = new MutableLiveData<>();
     private SearchRepository searchRepository;
