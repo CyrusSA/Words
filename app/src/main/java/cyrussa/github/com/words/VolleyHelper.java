@@ -1,4 +1,4 @@
-package cyrussa.github.com.words.Services;
+package cyrussa.github.com.words;
 
 import android.content.Context;
 

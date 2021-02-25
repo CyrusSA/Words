@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import cyrussa.github.com.words.Services.VolleyHelper;
 import cyrussa.github.com.words.ViewModels.SearchFragmentViewModel;
 
 public class SearchFragment extends Fragment {

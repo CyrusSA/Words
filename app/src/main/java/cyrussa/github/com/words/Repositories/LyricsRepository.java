@@ -1,4 +1,4 @@
-package cyrussa.github.com.words.Services.Repositories;
+package cyrussa.github.com.words.Repositories;
 
 import android.util.Log;
 
@@ -9,7 +9,7 @@ import org.json.JSONException;
 
 import java.util.function.Consumer;
 
-import cyrussa.github.com.words.Services.VolleyHelper;
+import cyrussa.github.com.words.VolleyHelper;
 
 public class LyricsRepository {
     private final String LYRICS_ENDPOINT =  "https://api.lyrics.ovh/v1/%s/%s/";

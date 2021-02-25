@@ -1,4 +1,4 @@
-package cyrussa.github.com.words.Services.Repositories;
+package cyrussa.github.com.words.Repositories;
 
 import android.util.Log;
 
@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 import cyrussa.github.com.words.BuildConfig;
 import cyrussa.github.com.words.Models.AccessToken;
 import cyrussa.github.com.words.Models.Song;
-import cyrussa.github.com.words.Services.VolleyHelper;
+import cyrussa.github.com.words.VolleyHelper;
 import lombok.Getter;
 
 public class SearchRepository {

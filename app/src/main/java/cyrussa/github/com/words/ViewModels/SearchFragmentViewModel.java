@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import cyrussa.github.com.words.Models.Song;
-import cyrussa.github.com.words.Services.Repositories.SearchRepository;
+import cyrussa.github.com.words.Repositories.SearchRepository;
 
 public class SearchFragmentViewModel extends ViewModel {
 
