@@ -7,16 +7,16 @@
     android:paddingVertical="5dp">
 
     <TextView
-        android:id="@+id/title12"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textSize="24sp"></TextView>
 
     <TextView
-        android:id="@+id/artist12"
+        android:id="@+id/artist"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_below="@+id/title12"
+        android:layout_below="@+id/title"
         android:textSize="18sp"></TextView>
 
 </RelativeLayout>

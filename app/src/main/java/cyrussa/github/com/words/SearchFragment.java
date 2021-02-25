@@ -1,25 +1,17 @@
 package cyrussa.github.com.words;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.os.Bundle;
-
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import cyrussa.github.com.words.Models.Song;
 import cyrussa.github.com.words.Services.VolleyHelper;
 import cyrussa.github.com.words.ViewModels.SearchFragmentViewModel;
 
@@ -47,70 +39,27 @@ public class SearchFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(SearchFragmentViewModel.class);
         viewModel.initialize();
 
+        setupRecyclerView();
+
+        viewModel.searchResults().observe(this, searchItemAdapter::setList);
+
+        searchButton.setOnClickListener(v -> viewModel.search(songTitle.getText().toString()));
+    }
+
+    private void setupRecyclerView() {
         recyclerView = getView().findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(requireContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        searchItemAdapter = new SearchItemAdapter();
+        searchItemAdapter = new SearchItemAdapter(song -> {
+            Intent lyricsActivityIntent = new Intent(getContext(), DisplayLyricsActivity.class);
+            lyricsActivityIntent.putExtra("song", song);
+            startActivity(lyricsActivityIntent);
+        });
         recyclerView.setAdapter(searchItemAdapter);
 
         recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
-
-        viewModel.searchResults().observe(this, searchItemAdapter::submitList);
-
-        searchButton.setOnClickListener(v -> viewModel.search(songTitle.getText().toString()));
-    }
-}
-
-class SearchItemAdapter extends ListAdapter<Song, SearchItemAdapter.ViewHolder> {
-
-    SearchItemAdapter() {
-        super(DIFF_CALLBACK);
-    }
-
-    static final DiffUtil.ItemCallback<Song> DIFF_CALLBACK = new DiffUtil.ItemCallback<Song>() {
-
-        @Override
-        public boolean areItemsTheSame(@NonNull Song oldItem, @NonNull Song newItem) {
-            return oldItem.equals(newItem);
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull Song oldItem, @NonNull Song newItem) {
-            return oldItem.equals(newItem);
-        }
-    };
-
-    class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        TextView title;
-        TextView artist;
-
-        ViewHolder(View itemView) {
-            super(itemView);
-            title = itemView.findViewById(R.id.title12);
-            artist = itemView.findViewById(R.id.artist12);
-        }
-
-        void bindTo(Song song) {
-            this.artist.setText(String.join(", ", song.getArtists()));
-            this.title.setText(song.getTitle());
-        }
-    }
-
-    // Create new views (invoked by the layout manager)
-    @Override
-    public SearchItemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View listItemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_listitem, parent, false);
-        ViewHolder vh = new ViewHolder(listItemView);
-        return vh;
-    }
-
-    // Replace the contents of a view (invoked by the layout manager)
-    @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        viewHolder.bindTo(getItem(position));
     }
 }

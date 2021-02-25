@@ -1,4 +1,4 @@
-package cyrussa.github.com.words.Services.Api;
+package cyrussa.github.com.words.Services.Repositories;
 
 import android.util.Log;
 
@@ -19,8 +19,8 @@ public class LyricsRepository {
         volleyHelper = VolleyHelper.getInstance();
     }
 
-    public void getLyrics(String songTitle, String artist, Consumer<String> callback){
-        String url = String.format(LYRICS_ENDPOINT, artist, songTitle);
+    public void getLyrics(String artist, String songTitle, Consumer<String> callback){
+        String url = String.format(LYRICS_ENDPOINT, artist, songTitle).trim().replace(" ", "%20");
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
                     try {

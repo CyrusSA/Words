@@ -1,8 +1,8 @@
 package cyrussa.github.com.words;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.widget.TextView;
 
 public class DisplayHistoryActivity extends Activity {

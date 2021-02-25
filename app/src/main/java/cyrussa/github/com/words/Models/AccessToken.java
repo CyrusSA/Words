@@ -4,10 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.function.Supplier;
 
-import lombok.Generated;
-import lombok.Getter;
 import lombok.Setter;
-import lombok.Value;
 
 public class AccessToken {
     private final String token;

@@ -1,4 +1,4 @@
-package cyrussa.github.com.words.Services.Api;
+package cyrussa.github.com.words.Services.Repositories;
 
 import android.util.Log;
 

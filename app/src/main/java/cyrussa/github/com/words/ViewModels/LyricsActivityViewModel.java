@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import cyrussa.github.com.words.Models.Song;
-import cyrussa.github.com.words.Services.Api.LyricsRepository;
+import cyrussa.github.com.words.Services.Repositories.LyricsRepository;
 import lombok.Getter;
 import lombok.Setter;
 

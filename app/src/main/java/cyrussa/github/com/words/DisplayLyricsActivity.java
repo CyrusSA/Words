@@ -1,12 +1,9 @@
 package cyrussa.github.com.words;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import cyrussa.github.com.words.Models.Song;
 import cyrussa.github.com.words.ViewModels.LyricsActivityViewModel;
