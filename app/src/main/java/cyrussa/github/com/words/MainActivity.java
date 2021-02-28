@@ -17,7 +17,4 @@ public class MainActivity extends AppCompatActivity {
 
         display = findViewById(R.id.display);
     }
-
-    public void displayHistory(View view) {
-    }
 }

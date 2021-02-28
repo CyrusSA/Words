@@ -25,9 +25,6 @@
         <activity
             android:name=".DisplayLyricsActivity"
             android:label="@string/title_activity_display_lyrics" />
-        <activity
-            android:name=".DisplayHistoryActivity"
-            android:label="@string/title_activity_display_history" />
     </application>
 
 </manifest>
